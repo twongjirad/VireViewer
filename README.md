@@ -5,4 +5,5 @@ Dependencies
 * Qt4
 * PyQt or PySide
 * pyqtgraph
-* ipython (for interactivity)
+* numpy
+* optional: ipython (for interactivity)
