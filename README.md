@@ -2,9 +2,9 @@
 
 ##Dependencies
 
-* Qt4
-* PyQt or PySide
-* pyqtgraph
+* Qt4 (GUI backend)
+* PyQt or PySide (python bindings)
+* pyqtgraph (python module for drawing)
 * numpy
 * optional: ipython (for interactivity)
 
