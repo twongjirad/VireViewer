@@ -237,8 +237,8 @@ class mainwindow( QtGui.QMainWindow ):
 if __name__ == "__main__":
 
     print "mw.vires is VireViewer class"
-    print "mv.vires.setWireColor( self, plane, wireid, color )"
-    print "mv.vires.show()"
+    print "mw.vires.setWireColor( self, plane, wireid, color )"
+    print "mw.vires.show()"
     app = QtGui.QApplication([])
     mw = mainwindow()
     mw.vires.show()
