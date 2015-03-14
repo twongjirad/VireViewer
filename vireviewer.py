@@ -15,7 +15,7 @@ class VireViewer( gl.GLViewWidget ):
         self.u_wires,self.v_wires,self.y_wires = self._define_wires()
         print "Number of U wires stored: ",self.u_wires.shape[0]/2
 
-        self.setCameraPosition(distance=12000)
+        self.setCameraPosition(distance=16000)
 
         # offsetting u,y
         self.u_wires[:,1] -= 2500.0
@@ -37,10 +37,6 @@ class VireViewer( gl.GLViewWidget ):
         self.addItem( gl_y_wires )
         self.planes = [ gl_u_wires, gl_v_wires, gl_y_wires ]
 
-        #for p in self.planes:
-        #    p.rotate(45,0,0,1)
-        #    p.rotate(90,0,1,0)
-        #    p.rotate(45,0,0,1)
         self.orbit( -135, 60 )
 
 
@@ -147,9 +143,17 @@ class VireViewer( gl.GLViewWidget ):
             else:
                 self.pan(-10*diff.x(), 10.0*diff.y(), 0, relative=False)
 
+    def paintGL(self, *args, **kwds):
+        gl.GLViewWidget.paintGL(self, *args, **kwds)
+        self.qglColor(QtCore.Qt.white)
+        nfts = 13
+        step = 12000.0/float(nfts-1)
+        for ft in xrange(0,nfts):
+            self.renderText(-6000+ft*step, 4000, 0, 'FT%d'%(ft+1))
+
 
 class mainwindow( QtGui.QMainWindow ):
-    def __init__(self, , use_cache=True, cache_dir="./cache"):
+    def __init__(self):
         super( mainwindow, self ).__init__()
         self.cw = QtGui.QWidget()
         self.setCentralWidget(self.cw)
