@@ -12,14 +12,23 @@ from collections import OrderedDict
 class VireViewer( gl.GLViewWidget ):
     def __init__(self):
         super( VireViewer, self ).__init__()
+
+        self.xmax = 10370.0
+        self.ymax = 2330.0
         self.u_wires,self.v_wires,self.y_wires = self._define_wires()
-        print "Number of U wires stored: ",self.u_wires.shape[0]/2
+        self.wires = [ self.u_wires,self.v_wires,self.y_wires ]
 
         self.setCameraPosition(distance=16000)
 
         # offsetting u,y
-        self.u_wires[:,1] -= 2500.0
-        self.y_wires[:,1] += 2500.0
+        self.yoffsets = [ -2500, 0.0, 2500 ]
+        self.zoffsets = [  -1, 0.0, 1 ]
+
+        # expanding wire positions
+        for wires,offset in zip(self.wires,self.yoffsets):
+            wires[:,1] += offset
+        #self.u_wires[:,1] -= 2500.0
+        #self.y_wires[:,1] += 2500.0
 
         self.colors = [ np.ones( (self.u_wires.shape[0],4) ),
                         np.ones( (self.v_wires.shape[0],4) ),
@@ -38,7 +47,7 @@ class VireViewer( gl.GLViewWidget ):
         self.planes = [ gl_u_wires, gl_v_wires, gl_y_wires ]
 
         self.orbit( -135, 60 )
-
+        self.collapsed = False # wires collapsed on top of on another
 
     def _define_wires(self, ):
         """define wire objects for drawing.
@@ -169,10 +178,35 @@ class VireViewer( gl.GLViewWidget ):
     def paintGL(self, *args, **kwds):
         gl.GLViewWidget.paintGL(self, *args, **kwds)
         self.qglColor(QtCore.Qt.white)
-        nfts = 13
+        nfts = 11
         step = 12000.0/float(nfts-1)
         for ft in xrange(0,nfts):
             self.renderText(-6000+ft*step, 4000, 0, 'FT%d'%(ft+1))
+
+    def collapseWires(self):
+        if self.collapsed:
+            return
+
+        for wires,yoffset,zoffset in zip(self.wires,self.yoffsets,self.zoffsets):
+            wires[:,1] -= yoffset
+            wires[:,2] += zoffset
+        self.collapsed = True
+
+        for wires,plane in zip(self.wires,self.planes):
+            plane.setData( pos=wires )
+
+    def expandWires(self):
+        if not self.collapsed:
+            return
+
+        for wires,yoffset,zoffset in zip(self.wires,self.yoffsets,self.zoffsets):
+            wires[:,1] += yoffset
+            wires[:,2] -= zoffset
+        self.collapsed = False
+
+        for wires,plane in zip(self.wires,self.planes):
+            plane.setData( pos=wires )
+
 
 
 class mainwindow( QtGui.QMainWindow ):
