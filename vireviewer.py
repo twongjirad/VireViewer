@@ -116,7 +116,7 @@ class VireViewer( gl.GLViewWidget ):
 
         return u_wires_np,v_wires_np,y_wires_np
 
-    def setWireColor( self, plane, wireid, color ):
+    def setWireColor( self, plane, wireid, color=np.array( (1.0,0.0,0.0,1.0) ) ):
         if type(color)==list or type(color)==tuple:
             if len(color)!=4:
                 print "invalid color"
@@ -124,9 +124,32 @@ class VireViewer( gl.GLViewWidget ):
             npcolor = np.array( color )
         elif isinstance(color,np.ndarray):
             npcolor = color
-        self.colors[plane][2*wireid,:] = npcolor[:]
-        self.colors[plane][2*wireid+1,:] = npcolor[:]
-        self.planes[plane].setData( color=self.colors[plane] )
+
+        if type(plane)==str:
+            planeid = self.translatePlaneNameToID( plane )
+        else:
+            planeid = plane
+        self.colors[planeid][2*wireid,:] = npcolor[:]
+        self.colors[planeid][2*wireid+1,:] = npcolor[:]
+        self.planes[planeid].setData( color=self.colors[planeid] )
+
+    def setWires( self, wireid_tuple, color=np.array( (1.0,0.0,0.0,1.0) ) ):
+        """activates a list of channels, supplied as a list of 2-tuple (plane,wireid)"""
+        if type(wireid_tuple)!=tuple and type(wireid_tuple)!=list:
+            print "invalid argument for wireid_tuple. need to supply tuple or list"
+        for item in wireid_tuple:
+            if len(item)!=2:
+                print "invalid format, item in channel list must be (int plane,int wireid) or (str plane, int wireid)"
+            self.setWireColor( item[0], item[1], color=color )
+
+    def translatePlaneNameToID( self, name ):
+        if name.upper()=='U':
+            return 0
+        elif name.upper()=='V':
+            return 1
+        elif name.upper()=='Y':
+            return 2
+        raise ValueError('unrecognized plane name: '+name)
         
     def resetWireColors( self ):
         for c in self.colors:
