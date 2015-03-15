@@ -57,3 +57,8 @@ In [4]: mw.vires.collapseWires()
 
 ![alt tag](https://raw.github.com/twongjirad/VireViewer/master/screenshots/bad_channels_collapsed.png)
 
+To reexpand them
+```
+(after above)
+In [4]: mw.vires.expandWires()
+```
