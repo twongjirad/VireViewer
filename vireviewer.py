@@ -233,17 +233,15 @@ class mainwindow( QtGui.QMainWindow ):
 #         self.colorB = QtGui.QLineEdit("1")
 #         self.colorR = QtGui.QLineEdit("1")
         
-
+app = QtGui.QApplication([])
+mw = mainwindow()
+print "mw.vires is VireViewer class"
+print "mw.vires.setWireColor( self, plane, wireid, color )"
+print "mw.vires.show()"
 
 if __name__ == "__main__":
 
-    print "mw.vires is VireViewer class"
-    print "mw.vires.setWireColor( self, plane, wireid, color )"
-    print "mw.vires.show()"
-    app = QtGui.QApplication([])
-    mw = mainwindow()
-    mw.vires.show()
-    
+    mw.vires.show()    
     #for i in xrange(0,1):
     #    mw.vires.setWireColor( 1, i+1000, np.array((1.0,0.0,0.0,1.0)) )
 
