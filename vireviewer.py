@@ -5,8 +5,9 @@ from pyqtgraph.Qt import QtCore, QtGui
 import pyqtgraph as pg
 import pyqtgraph.opengl as gl
 import numpy as np
+from channelmap import getChannelMap
 
-import collada
+#import collada
 from collections import OrderedDict
 
 class VireViewer( gl.GLViewWidget ):
@@ -17,6 +18,7 @@ class VireViewer( gl.GLViewWidget ):
         self.ymax = 2330.0
         self.u_wires,self.v_wires,self.y_wires = self._define_wires()
         self.wires = [ self.u_wires,self.v_wires,self.y_wires ]
+        self.chmap = getChannelMap()
 
         self.setCameraPosition(distance=16000)
 
@@ -49,6 +51,12 @@ class VireViewer( gl.GLViewWidget ):
 
         self.orbit( -135, 60 )
         self.collapsed = False # wires collapsed on top of on another
+
+    def _getplanewire( self, crate, slot, femch ):
+        if (crate,slot,femch) in self.chmap:
+            return self.chmap[(crate,slot,femch)]
+        else:
+            return None
 
     def _define_wires(self, ):
         """define wire objects for drawing.
@@ -142,6 +150,13 @@ class VireViewer( gl.GLViewWidget ):
         self.colors[planeid][2*wireid,:] = npcolor[:]
         self.colors[planeid][2*wireid+1,:] = npcolor[:]
         self.planes[planeid].setData( color=self.colors[planeid] )
+
+    def setWireColorByCSF( self, crate, slot, femch, color=np.array( (1.0,0.0,0.0,1.0) ) ):
+        planewire = self._getplanewire( crate, slot, femch )
+        if planewire is None:
+            print "Missing ",crate, slot, femch," in database. Ask Andrzej"
+            return
+        self.setWireColor( plane[0], plane[1], color=color )
 
     def setWires( self, wireid_tuple, color=np.array( (1.0,0.0,0.0,1.0) ) ):
         """activates a list of channels, supplied as a list of 2-tuple (plane,wireid)"""
@@ -238,6 +253,10 @@ mw = mainwindow()
 print "mw.vires is VireViewer class"
 print "mw.vires.setWireColor( self, plane, wireid, color )"
 print "mw.vires.show()"
+
+def getmw():
+    global mw
+    return mw
 
 if __name__ == "__main__":
 
