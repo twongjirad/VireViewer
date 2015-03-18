@@ -27,7 +27,7 @@ def getChannelMap():
             #maparr[n]['femch'] = femch
             #maparr[n]['plane'] = plane
             #maparr[n]['wireid'] = wireid
-            channelmap[ (crate,slot,wireid) ] = ( plane, wireid )
+            channelmap[ (crate,slot,femch) ] = ( plane, wireid )
     return channelmap
 
 if __name__=="__main__":
