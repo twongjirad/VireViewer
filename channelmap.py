@@ -12,7 +12,7 @@ def getChannelMap():
         f = open('csf2planewire.txt','r')
         lines = f.readlines()
         #maparr = np.zeros( (len(lines[2:]),5), dtype=[ ('crate',int), ('slot',int), ('femch',int), ('plane','|S2'), ('wireid',int) ] )
-        maparr = np.zeros( (len(lines[2:])), dtype=[ ('crate','i4'), ('slot','i4'), ('femch','i4'), ('plane','|S2'), ('wireid','i4') ] )
+        #maparr = np.zeros( (len(lines[2:])), dtype=[ ('crate','i4'), ('slot','i4'), ('femch','i4'), ('plane','|S2'), ('wireid','i4') ] )
         for n,l in enumerate(lines[2:]):
             l = l.strip().split("|")
             if l is None:
@@ -22,11 +22,11 @@ def getChannelMap():
             femch = int(l[2].strip())
             plane = l[3].strip()
             wireid = int(l[4].strip())
-            maparr[n]['crate'] = crate
-            maparr[n]['slot'] = slot
-            maparr[n]['femch'] = femch
-            maparr[n]['plane'] = plane
-            maparr[n]['wireid'] = wireid
+            #maparr[n]['crate'] = crate
+            #maparr[n]['slot'] = slot
+            #maparr[n]['femch'] = femch
+            #maparr[n]['plane'] = plane
+            #maparr[n]['wireid'] = wireid
             channelmap[ (crate,slot,wireid) ] = ( plane, wireid )
     return channelmap
 
