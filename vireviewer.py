@@ -45,6 +45,7 @@ class VireViewer( gl.GLViewWidget ):
         gl_y_wires = gl.GLLinePlotItem(pos=self.y_wires, color=self.colors[2], width=1.0, antialias=True, mode='lines')
         self.addItem( gl_y_wires )
         self.planes = [ gl_u_wires, gl_v_wires, gl_y_wires ]
+        gl_v_wires.rotate(180,0,0,1)
 
         self.orbit( -135, 60 )
         self.collapsed = False # wires collapsed on top of on another
