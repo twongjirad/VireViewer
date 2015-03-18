@@ -156,7 +156,7 @@ class VireViewer( gl.GLViewWidget ):
         if planewire is None:
             print "Missing ",crate, slot, femch," in database. Ask Andrzej"
             return
-        self.setWireColor( plane[0], plane[1], color=color )
+        self.setWireColor( planewire[0], planewire[1], color=color )
 
     def setWires( self, wireid_tuple, color=np.array( (1.0,0.0,0.0,1.0) ) ):
         """activates a list of channels, supplied as a list of 2-tuple (plane,wireid)"""
