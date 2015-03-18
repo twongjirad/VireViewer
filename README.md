@@ -62,3 +62,15 @@ To reexpand them
 (after above)
 In [4]: mw.vires.expandWires()
 ```
+
+## Regular Python
+
+```
+> python
+>>> from vireviewer import *
+Number of U-wires:  2400
+mw.vires is VireViewer class
+mw.vires.setWireColor( self, plane, wireid, color )
+mw.vires.show()
+>>> mw.vires.show()
+```
