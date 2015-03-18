@@ -7,7 +7,6 @@ import pyqtgraph.opengl as gl
 import numpy as np
 from channelmap import getChannelMap
 
-#import collada
 from collections import OrderedDict
 
 class VireViewer( gl.GLViewWidget ):
@@ -223,7 +222,13 @@ class VireViewer( gl.GLViewWidget ):
         for wires,plane in zip(self.wires,self.planes):
             plane.setData( pos=wires )
 
-
+    def save(self,fout):
+        if type(fout)!=str:
+            print "need string: ",fout
+        if fout[-4:]==".png":
+            self.readQImage().save(fout)
+        else:
+            self.readQImage().save(fout+".png")
 
 class mainwindow( QtGui.QMainWindow ):
     def __init__(self):
