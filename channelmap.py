@@ -9,7 +9,7 @@ def getChannelMap():
     if channelmap is None:
         print "Build Channel Map"
         channelmap = {}
-        f = open('csf2planewire.txt','r')
+        f = open('csf2planewire_v2.txt','r')
         lines = f.readlines()
         #maparr = np.zeros( (len(lines[2:]),5), dtype=[ ('crate',int), ('slot',int), ('femch',int), ('plane','|S2'), ('wireid',int) ] )
         #maparr = np.zeros( (len(lines[2:])), dtype=[ ('crate','i4'), ('slot','i4'), ('femch','i4'), ('plane','|S2'), ('wireid','i4') ] )

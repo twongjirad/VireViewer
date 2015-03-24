@@ -178,7 +178,7 @@ class VireViewer( gl.GLViewWidget ):
     def resetWireColors( self ):
         for c in self.colors:
             c[:,:] = np.ones( 4 )[:]
-            c[:,3] = 0.1
+            c[:,3] = 0.01
 
     def mouseMoveEvent(self, ev):
         diff = ev.pos() - self.mousePos
